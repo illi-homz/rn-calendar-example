@@ -1,7 +1,12 @@
-import RNCalendarEvents, {
-  Calendar as CalendarNative,
+// import RNCalendarEvents, {
+//   Calendar as CalendarNative,
+//   CalendarOptions,
+// } from './RNCalendarEvents.android';
+import RNCalendarEvents from './RNCalendarEvents';
+import {
   CalendarOptions,
-} from 'react-native-calendar-events';
+  Calendar as CalendarNative,
+} from './RNCalendarEventsTypes';
 
 const costomCalendar: CalendarOptions = {
   title: 'gopkabel@gmail.com',
@@ -26,10 +31,15 @@ class Calendar {
 
   async onStart() {
     const grant = await this.checkPermission();
+    console.log('grant', grant);
     if (!grant) {
       return this.requestPermission();
     }
 
+    this.getCalendar();
+  }
+
+  async getCalendar() {
     const calendar = await this.findCalendars();
     if (calendar) {
       this.calendar = calendar;
@@ -41,6 +51,7 @@ class Calendar {
 
   async checkPermission() {
     const res = await RNCalendarEvents.checkPermissions(false);
+    console.log('res', res, ['undetermined', 'denied', 'restricted'].includes(res));
     if (['undetermined', 'denied', 'restricted'].includes(res)) {
       return false;
     }
@@ -51,7 +62,7 @@ class Calendar {
   async requestPermission() {
     const res = await RNCalendarEvents.requestPermissions(false);
     if (res === 'authorized') {
-      this.onStart();
+      this.getCalendar();
     }
     console.log('requestPermission', res);
   }
@@ -78,7 +89,7 @@ class Calendar {
 
     RNCalendarEvents.saveEvent('Calendar title', {
       calendarId: this.calendar.id,
-      calendar: this.calendar,
+      // calendar: this.calendar,
       startDate: startDate.toISOString(),
       endDate,
       description: 'description',
@@ -107,5 +118,5 @@ class Calendar {
   }
 }
 
-export default new Calendar();
+export default Calendar;
 export {Calendar};

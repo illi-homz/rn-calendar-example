@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,11 +13,12 @@ import Calendar from './utils/Calendar';
 
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
+  const calendar = useRef(new Calendar()).current;
 
   const startAlarm = async () => {
     let time = new Date().getTime();
-    const date = new Date(time + 2 * 60 * 1000);
-    Calendar.addEvent(date);
+    const date = new Date(time + 4 * 60 * 1000);
+    calendar.addEvent(date);
   };
 
   const backgroundStyle = {
