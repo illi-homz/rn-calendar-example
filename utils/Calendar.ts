@@ -9,6 +9,8 @@ import {
 } from './RNCalendarEventsTypes';
 
 const costomCalendar: CalendarOptions = {
+  // title: 'Samsung Calendar',
+  // title: 'DaoWay Calendar',
   title: 'gopkabel@gmail.com',
   color: '#FF0000',
   entityType: 'event',
@@ -16,9 +18,9 @@ const costomCalendar: CalendarOptions = {
   accessLevel: 'owner',
   ownerAccount: 'gopkabel@gmail.com',
   source: {
-    name: 'Ilya',
-    type: 'com.example',
-    // isLocalAccount: true,
+    name: 'DaoWay',
+    // type: 'com.example',
+    isLocalAccount: true,
   },
 };
 
@@ -45,7 +47,8 @@ class Calendar {
       this.calendar = calendar;
       // calendar?.id && this.removeCalendar(calendar.id);
     } else {
-      this.createCalendar();
+      await this.createCalendar();
+      this.getCalendar();
     }
   }
 
@@ -69,7 +72,6 @@ class Calendar {
 
   async createCalendar() {
     const calendarId = await RNCalendarEvents.saveCalendar(costomCalendar);
-    this.findCalendars();
     console.log('Calendar is created by id', calendarId);
   }
 
@@ -87,7 +89,7 @@ class Calendar {
 
     const endDate = new Date(startDate.getTime() + 60 * 1000).toISOString();
 
-    RNCalendarEvents.saveEvent('Calendar title', {
+    RNCalendarEvents.saveEvent('Any event', {
       calendarId: this.calendar.id,
       // calendar: this.calendar,
       startDate: startDate.toISOString(),

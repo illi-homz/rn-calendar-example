@@ -1,11 +1,33 @@
 package com.example;
 
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 public class MainActivity extends ReactActivity {
+
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    try {
+      Intent intent = getIntent();
+      Log.d("ReactActivityIntent", intent.toString());
+      if (intent != null) {
+        String action = intent.getAction();
+        Uri data = intent.getData();
+        Log.d("ReactActivityIntent", "onCreate: " + action + ", " + data.toString());
+      }
+    } catch (Exception e) {
+      Log.d("onCreate Exception", "error:", e);
+    }
+  }
 
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule

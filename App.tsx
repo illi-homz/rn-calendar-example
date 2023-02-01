@@ -17,7 +17,7 @@ function App(): JSX.Element {
 
   const startAlarm = async () => {
     let time = new Date().getTime();
-    const date = new Date(time + 4 * 60 * 1000);
+    const date = new Date(time + 1 * 60 * 1000);
     calendar.addEvent(date);
   };
 
